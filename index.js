@@ -8,13 +8,23 @@ const client = new Discord.Client();
 
 client.once('ready', () => {
   console.log('Minecraft Discord Bot ready');
-  pingServer();
-  setInterval(() => pingServer(), 60000);
+  startPing();
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
 
 let status;
+
+const startPing = () => {
+  try {
+    pingServer();
+  } catch (error) {
+    console.error(error);
+    setTimeout(() => startPing(), 5000);
+    return;
+  }
+  setInterval(() => pingServer(), process.env.PING_INTERVAL * 1000);
+};
 
 const pingServer = () => {
   ping(
