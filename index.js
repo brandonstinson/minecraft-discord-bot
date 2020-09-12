@@ -22,7 +22,7 @@ client.once('ready', () => {
 client.login(process.env.DISCORD_BOT_TOKEN);
 
 const pingServer = async () => {
-  ping(process.env.MINECRAFT_SERVER_URL, parseInt(mcPort), (error, response) => {
+  ping(process.env.MINECRAFT_SERVER_URL, parseInt(mcPort), async (error, response) => {
     if (error) {
       console.error(error);
       client.user.setActivity(`couldn't ping`);
