@@ -21,7 +21,7 @@ client.once('ready', () => {
 
 client.login(process.env.DISCORD_BOT_TOKEN);
 
-const pingServer = () => {
+const pingServer = async () => {
   ping(process.env.MINECRAFT_SERVER_URL, parseInt(mcPort), (error, response) => {
     if (error) {
       console.error(error);
@@ -36,7 +36,8 @@ const pingServer = () => {
           status > onlinePlayers
             ? `A player logged off (${onlinePlayers} now playing)`
             : `A player logged on (${onlinePlayers} now playing)`;
-        client.channels.fetch(channel).send(message);
+        const msgCh = await client.channels.fetch(channel);
+        msgCh.send(message);
       }
       status = onlinePlayers;
     }
